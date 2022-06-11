@@ -1,0 +1,1059 @@
+// ProyectoProgramacion_2Parcial.cpp 
+// Kevin Cabrera
+
+#include <iostream>
+#include<stdlib.h>
+#include <time.h> // Libreria uso del rand
+// Librerias para pausar la ejecucion
+#include <thread> 
+#include <chrono>
+// Libreria para poder cambiar de color el texto de la consola
+#include "Windows.h"
+using namespace std;
+
+
+// Estructura con las propiedades del personaje principal
+struct CHARACHTERS
+{
+    float life = 50;
+    float force;
+    float saberSkill;
+    string name;
+
+} struct_character;
+
+// Se crea un objeto de la estructura
+CHARACHTERS chosenCharachter;
+CHARACHTERS rivalCharachter;
+
+/*
+// Estructuras con las propiedades de Sith
+struct SITH
+{
+    int life =  20;
+    float force;
+    float saberSkill;
+    string nameApprentice;
+} darkside_character;
+*/
+
+// Clase Enemies la cual contiene el atributo de la clase, el constructor y el metodo que estara 
+// asociado a la clase
+class Enemies
+{
+
+public:
+    float vida = 20;
+    Enemies(int); // Constructor de la clase
+    virtual void Attack(); // Metodo Ataque de enemigos
+
+};
+
+Enemies::Enemies(int _vida) // Asignamos valores al constructor
+{
+    // Asignamos valores del constructor a las variables propias de la clase
+    vida = _vida;
+}
+
+// Se crea el objeto de la clase con el valor del atributo 
+Enemies rival(20);
+
+
+// Metodo de Ataque del personaje principal hacia enemigos comunes (Hacia la clase Enemies)
+void charachterAttack()
+{
+    // Declaracion de un arreglo para almacenar los nombres de los ataques del personaje principal
+    string ataque[3] = { "Torbellino de Lightsaber", "Relampago de Lightsaber", "Empujon de la Fuerza" };
+    // Declaracion de un arreglo para almacenar los valores de cada ataque
+    // Adem�s, con cada uso de un ataque relacionado a los sables de luz, se le aumentara un porcentaje de experiencia
+    // De la misma manera si el usuario escoge el ataque asociado a la Fuerza, su experiencia en esta se vera aumentada
+    float danio[3] = { 12 + (chosenCharachter.saberSkill * 0.15), 15 + (chosenCharachter.saberSkill * 0.15), 10 + (chosenCharachter.force * 0.1)};
+
+    // Variable para almacenar el ataque escogido por el usuario
+    int ataqueEscogido = 0;
+    // Ciclo que obliga al jugador a introducir uno de estos enteros asociados a los ataques disponibles
+    while (ataqueEscogido != 1 && ataqueEscogido != 2 && ataqueEscogido != 3)
+    {
+        cout << "Escoge el ataque a realizar: " << endl;
+        cout << "1.Torbellino de Lightsaber" << endl;
+        cout << "2.Relampago de Lightsaber" << endl;
+        cout << "3.Empujon de la Fuerza" << endl;
+
+        // Ciclo para verificar que ataque ha introducido el usuario
+        for (int i = 0; i < 3; i++)
+        {
+            // Se imprime el nombre del usuario mas el ataque escogido
+            cout << chosenCharachter.name << "has elegido: " << endl;
+            cout << ataque[i] << endl;
+        }
+
+        cin >> ataqueEscogido;
+    }
+    // Segun el ataque introducido por el jugador se le restara el valor asociado de danio a la vida del rival (Enemigo Comun)
+    rival.vida = rival.vida - danio[ataqueEscogido];
+    // Impresion de mensaje para indicar cuanto se disminuyo la vida del Enemigo Comun
+    cout << chosenCharachter.name << " le has quitado " << danio[ataqueEscogido] << " puntos de vida a tu enemigo." << endl;
+
+}
+
+// Metodo de Ataque del personaje principal hacia el jefe final
+void charachterrivalAttack()
+{
+    // Declaracion de un arreglo para almacenar los nombres de los ataques del personaje principal
+    string ataque[3] = { "Torbellino de Lightsaber", "Relampago de Lightsaber", "Empujon de la Fuerza" };
+    // Declaracion de un arreglo para almacenar los valores de cada ataque
+    // Adem�s, con cada uso de un ataque relacionado a los sables de luz, se le aumentara un porcentaje de experiencia
+    // De la misma manera si el usuario escoge el ataque asociado a la fuerza, su experiencia en esta se vera aumentada
+    float danio[3] = { 12 + (chosenCharachter.saberSkill * 0.15), 15 + (chosenCharachter.saberSkill * 0.15), 10 + (chosenCharachter.force * 0.1) };
+
+    // Variable para almacenar el ataque escogido por el usuario
+    int ataqueEscogido = 0;
+    // Ciclo que obliga al jugador a introducir uno de estos enteros asociados a los ataques disponibles
+    while (ataqueEscogido != 1 && ataqueEscogido != 2 && ataqueEscogido != 3)
+    {
+        cout << "Escoge el ataque a realizar: " << endl;
+        cout << "1.Torbellino de Lightsaber" << endl;
+        cout << "2.Relampago de Lightsaber" << endl;
+        cout << "3.Empujon de la Fuerza" << endl;
+        /*
+        cin >> ataqueEscogido;
+        */
+        
+        
+        // Ciclo para verificar que ataque ha introducido el usuario
+        for (int i = 0; i < 3; i++)
+        {
+            cout << '\n' << endl;
+            // Se imprime el nombre del usuario mas el ataque escogido
+            cout << chosenCharachter.name << "has elegido: " << endl;
+            cout << ataque[i] << endl;
+        }
+
+        cin >> ataqueEscogido;
+        
+
+        
+    }
+
+    /*
+    switch (ataqueEscogido)
+    {
+    case 1:
+        cout << chosenCharachter.name << " has elegido: " << ataque[3] << endl;
+        break;
+    case 2:
+        cout << chosenCharachter.name << " has elegido: " << ataque[3] << endl;
+        break;
+    case 3:
+        cout << chosenCharachter.name << " has elegido: " << ataque[3] << endl;
+        break;
+
+    }
+    */
+    // Segun el ataque introducido por el jugador se le restara el valor asociado de da�o a la vida del Personaje Rival (Jefe Final)
+    rivalCharachter.life = rivalCharachter.life - danio[ataqueEscogido];
+    // Impresion de mensaje para indicar cuanto se disminuyo la vida del Jefe Final
+    cout << chosenCharachter.name << " le has quitado " << danio[ataqueEscogido] << " puntos de vida a tu enemigo." << endl;
+
+}
+
+// Metodo de ataque del jefe final
+void rivalcharachterAttack()
+{
+    // Declaracion de un arreglo para almacenar los nombres de los ataques del Jefe Final
+    string ataque[3] = { "Salto de impacto de luz", "Trueno Relampago", "Levantamiento de la Fuerza" };
+    float danio[3] = { 12 + (chosenCharachter.saberSkill * 0.15), 15 + (chosenCharachter.saberSkill * 0.15), 10 };
+
+    // Utilizara funcion random para elegir un ataque del arreglo
+    int ataqueEscogido = rand() % (3 - 1);
+    // Se imprime el nombre del rival mas el ataque escogido
+    cout << rivalCharachter.name << "ha elegido: " << endl;
+    cout << ataque[ataqueEscogido] << endl;
+    // Segun el ataque escogido por random se le restara el da�o asociado a la vida del jugador
+    chosenCharachter.life = chosenCharachter.life - danio[ataqueEscogido];
+    // Impresion de mensaje del da�o causado por el oponente
+    cout << rivalCharachter.name << " te ha quitado " << danio[ataqueEscogido] << " puntos de vida." << endl;
+
+}
+
+// Se define el metodo o funcion Attack que describe el ataque de enemigos comunes
+void Enemies::Attack()
+{
+    // Arreglo con los ataques
+    string ataques[3] = {"Ataque 1", "Ataque 2", "Ataque 3"};
+    // Arreglo con el da�o de cada ataque
+    float danio[3] = { 5,6,8 };
+
+
+    // Se inicializa la funcion random
+    srand(time(0));
+    
+    // Seleccion del ataque random del enemigo
+    int tipoAtaque = rand() % (3 - 1);
+   
+    // Funcion para restar PV al jugador segun el ataque del enemigo comun
+    chosenCharachter.life = chosenCharachter.life - danio[tipoAtaque];
+    // Impresion del da�o de ataque
+    cout << "El enemigo te ha quitado " << danio[tipoAtaque] << " puntos de vida." << endl;
+}
+
+// Metodo para controlar el hasta cuando salir del combate contra enemigos comunes
+void combatEnemy()
+{
+    // Mientras la vida del enemigo y el jugador sea mayor que 0 se estar� en combate
+    while (rival.vida > 0 && chosenCharachter.life > 0)
+    {
+        // Se llama a los metodos asociados del jugador y el enemigo comun
+        charachterAttack();
+        rival.Attack();
+    }
+}
+
+// Metodo para controlar hasta cuando salir del combate contra el Jefe Final
+void combatRival()
+{
+    // Mientras la vida del Jefe Final y el jugador sea mayor que 0 se estar� en combate
+    while (rivalCharachter.life > 0 && chosenCharachter.life > 0)
+    {
+        // Se llama a los metodos asociados del jugador y Jefe Final
+        charachterAttack();
+        rivalcharachterAttack();
+    }
+}
+
+// Metodo que para restaurar la vida del jugador cuando salga de combate contra enemigos comunes
+void reset()
+{
+    // Se restablece tambi�n el atributo del enemigo comun para poder ser usada en otras condiciones
+    rival.vida = 20;
+    chosenCharachter.life = 50;
+}
+
+// Metodo para aumentar las habilidades en la Fuerza
+void bonusForce()
+{
+    // Variable para almacenar la experiencia
+    int numForce;
+    // Variable para multiplicar el numero random por el un porcentaje
+    float bonusForce;
+    // Se inicializa la funcion random
+    srand(time(0));
+    // Se genera un numero random entre el 2 y 6
+    numForce = (rand() % 6) + 2;
+    // Se multiplica el numero random generado por un porcentaje
+    bonusForce = numForce * 0.35;
+    // Se multiplica el numero random generado por un porcentaje
+    bonusForce = numForce * 0.35;
+    // Funcion que suma los puntos de habilidad mas el bonus
+    chosenCharachter.force = chosenCharachter.force + (bonusForce);
+    cout << chosenCharachter.name << " has aumentado tus habilidades en la Fuerza por " << numForce << endl;
+    cout << "Tu poder en la Fuerza ahora es de: " << chosenCharachter.force << endl;
+}
+
+// Metodo para aumentar las habilidades con el Lightsaber
+void bonusLightsaber()
+{
+    // Variable para almacenar la experiencia
+    int numLightsaber;
+    // Variable para multiplicar el numero random por el un porcentaje
+    float bonusLightsaber;
+    // Se inicializa la funcion random
+    srand(time(0));
+    // Se genera un numero random entre el 2 y 6
+    numLightsaber = (rand() % 6) + 2;
+    // Se multiplica el numero random generado por un porcentaje
+    bonusLightsaber = numLightsaber * 0.35;
+    // Funcion que suma los puntos de habilidad mas el bonus
+    chosenCharachter.saberSkill = chosenCharachter.saberSkill + (bonusLightsaber);
+    cout << chosenCharachter.name << " has aumentado tus habilidades con el lightsaber por " << bonusLightsaber << endl;
+    cout << "Tu destreza con el lightsaber ahora es de: " << chosenCharachter.saberSkill << endl;
+}
+
+int main()
+{
+    // Variable que se usara para poder acceder a partes del codigo segun la eleccion del jugador
+    char eleccionJugador = ' ';
+
+    // Intro
+    cout << "A long time ago in a galaxy far," << endl;
+    cout << "far away...." << endl;
+    // Metodo para pausar la ejecucion del programa
+    chrono::seconds dura(3); // tiempo de pausa 3 segundos
+    this_thread::sleep_for(dura);
+
+    cout << R"(
+    MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+    MMMMMMMMMMMMMMMMMMMMMMMMMMMWOolllllllllllllllllllllloxdllllloxdlllllllllloONMMMMMMMMMMMMMMMMMMMMMMMM
+    MMMMMMMMMMMMMMMMMMMMMMMMMW0:.                       .'       ''           .:0WMMMMMMMMMMMMMMMMMMMMMM
+    MMMMMMMMMMMMMMMMMMMMMMMMWx.     .::::::::'      ,:::;.       .;.     ,,.    .dNMMMMMMMMMMMMMMMMMMMMM
+    MMMMMMMMMMMMMMMMMMMMMMMWd.      ;oooood0Xl     ,KWWk.         ,,    .:l'      cXMMMMMMMMMMMMMMMMMMMM
+    MMMMMMMMMMMMMMMMMMMMMMWk.              ,o'     lN0o,          .;.              cXMMMMMMMMMMMMMMMMMMM
+    MMMMMMMMMMMMMMMMMMMMMMWx'......        ::     .xK;      ,;     ;'              'OMMMMMMMMMMMMMMMMMMM
+    MMMMMMMMMMMMMMMMMMMMN0kxollld00l.     .l'     'kl       ,'     ':.     .      .oNMMMMMMMMMMMMMMMMMMM
+    MMMMMMMMMMMMMMMMMMMKc.      'ol.      :c      ;c.              .:'     .c'     .oKMMMMMMMMMMMMMMMMMM
+    MMMMMMMMMMMMMMMMMM0;                 .l'      ..      .,,'      ,:      :Ol.     'dXMMMMMMMMMMMMMMMM
+    MMMMMMMMMMMMMMMMMWl                 .cc              .kWWK;     .c'     .oXk,      ,kNMMMMMMMMMMMMMM
+    MMMMMMMMMMMMMMMMWXkc;;:ccc:;,,,:ccloxOo;,,;:;,,,,,,,;dXXXKd;,,,,;oo;:cc:;l0XOc;,,,,,cOWMMMMMMMMMMMMM
+    MMMMMMMMMMMMMMM0:....:0MNk;...'xWMWk;....,ol'.......'ll.............;xk;.............':kNMMMMMMMMMMM
+    MMMMMMMMMMMMMWO'    .xNO;     'OMXo.    .c;          :;              ..                .oNMMMMMMMMMM
+    MMMMMMMMMMMMWk.    .xOc.      lN0;     'c,           :;      ...               .'.      .lNMMMMMMMMM
+    MMMMMMMMMMMWd.    .ll.       .xd.     ,c.            :;      cOd.              c0kc;;;;;;l0MMMMMMMMM
+    MMMMMMMMMMNo.     '.         ',.     ;c.             ::       ..                .'''''''',ckNMMMMMMM
+    MMMMMMMMMXl.                       .c:.              ::                 ..                  :0WMMMMM
+    MMMMMMMMK:                        .l;      .:,       ::                .oOo,........         'kWMMMM
+    MMMMMMM0;          'l,           ,l'       'l'       :c               ,kWMXxlccccldOk:.       .kWMMM
+    MMMMMWO,         .lKk.          ;c.                  :c       ,c.      ;OW0'      .o0k,        .kWMM
+    MMMMWk'         ;OWNc         .cc.       ...         :c       ,Od.      .dXo        ..          .kWM
+    MMMWx.        .dXMM0'        .l;       'x0KKo.       :c       .kWk.       :x,                    .kW
+    MMNo.       .:0WMMWo        'l,       :KMMMMx.       :l.       dWWO'       .;.                    lN
+    MMXxlllllllokNMMMMWOolllllld0OolllllokNMMMMMKdllllllok0dllllllo0WMW0dlllllloxOxolllllllllllllllookXM
+    MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+    MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+                
+    )" << '\n' << endl;
+
+    // Metodo para pausar la ejecucion del programa
+    chrono::seconds dura2(3); // tiempo de pausa 3 segundos
+    this_thread::sleep_for(dura2);
+
+    cout << "Tiempos oscuros dominan la galaxia," << endl;
+    cout << "en cada sistema los siths exterminan a " << endl;
+    cout << "aquellos que son sensibles a la Fuerza," << endl;
+    cout << "buscan perturbarla y desequilibrarla." << endl;
+    cout << "Dejando asi a la galaxia entera en un" << endl;
+    cout << "reino total del lado oscuro." << endl;
+    cout << "\n" << endl;
+    cout << "Los sobrevivientes de los templos Jedi han" << endl;
+    cout << "escondido a los jovenes Padawans para asi," << endl;
+    cout << "brindarle esperanza a la galaxia y mantener " << endl;
+    cout << "el equilibrio en la Fuerza." << endl;
+    cout << "\n" << endl;
+    cout << "En el asediado mundo de Christophsis los" << endl;
+    cout << "usuarios del lado oscuro han encontrado una" << endl;
+    cout << "de estas celulas de Padawans sobrevivientes." << endl;
+    cout << "El equilibrio de la Fuerza y la paz en la" << endl;
+    cout << "galaxia parece cada vez mas lejano...." << endl;
+
+    // Metodo para pausar la ejecucion del programa
+    chrono::seconds dura3(3); // tiempo de pausa 3 segundos
+    this_thread::sleep_for(dura3);
+
+    // Ciclo para eleccion de avatar del usuario
+    // el programa no continuara si el usuario no ingresa las teclas correspondientes
+    while (eleccionJugador != '1' && eleccionJugador != '2')
+    {
+        cout << "\n" << endl;
+        cout << "\n" << endl;
+		cout << "El equilibrio de la Fuerza esta en tus manos...." << endl;
+		cout << "Elige tu bando: " << endl;
+        cout << "Digita 1. JEDI" << endl;
+        cout << "Digita 2. SITH" << endl;
+        eleccionJugador = ' ';
+        cin >> eleccionJugador;
+
+        if (eleccionJugador == '1')
+        {
+            // Funcion para cambiar el color de texto de la consola a Verde = 2, representando el color del Lightsaber
+            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 2);
+              cout << R"(
+	                MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+	                MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMWWNXXXKKKXXNNWMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+	                MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMWXOxol:,'........'':coxOKNMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+	                MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMWXOdc,.                        .':oOXWMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+	                MMMMMMMMMMMMMMMMMMMMMMMMMMMMW0d:.      .'CclodxxkkkkxxdolcC'.      .o0NMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+	                MMMMMMMMMMMMMMMMMMMMMMMMMWKdd.    .,cdOKNWMMMMMMMMMMMMMMMMWNKOdc,.    .,o0WMMMMMMMMMMMMMMMMMMMMMMMMM
+	                MMMMMMMMMMMMMMMMMMMMMMMNOc.    .:x0NMMMMMMMMMMMMMMMMMMMMMMMMMMMMNKxc'    .:kNMMMMMMMMMMMMMMMMMMMMMMM
+	                MMMMMMMMMMMMMMMMMMMMMNkk.   .:xXWMNNWMMMMMMMMMMMWWWWMMMMMMMMMMMWNNMMNkc.    ,xNMMMMMMMMMMMMMMMMMMMMM
+	                MMMMMMMMMMMMMMMMMMMW0:.   .o0WMMXOOXMMMMMMMMMMMMWXXNMMMMMMMMMMMMNOkXMMWKd'    .OWMMMMMMMMMMMMMMMMMMM
+	                MMMMMMMMMMMMMMMMMMXo.   .oKWMMNx.oXMMMMMMMMMMMMMNKKNMMMMMMMMMMMMMNd.dXMMMXd'   .lKMMMMMMMMMMMMMMMMMM
+	                MMMMMMMMMMMMMMMMW0:   .c0WMMW0: ,0MMMMMMMMMMMMMMNK0NMMMMMMMMMMMMMMX. .OWMMWKl.   ,OWMMMMMMMMMMMMMMMM
+	                MMMMMMMMMMMMMMMWO'   .xNMMMWk'  :NMMMMMMMMMMMMMMN0OXMMMMMMMMMMMMMMWl  .xNMMMWk'   .xWMMMMMMMMMMMMMMM
+	                MMMMMMMMMMMMMMWk'   ,OWMMMWx.   :XMMMMMMMMMMMMMMXOkXMMMMMMMMMMMMMMNc   .dNMMMMK.   .xWMMMMMMMMMMMMMM
+	                MMMMMMMMMMMMMMO'   ,0MMMMMO'    'OMMMMMMMMMMMMMMXkxKMMMMMMMMMMMMMMK,    .kWMMMMK:   .kWMMMMMMMMMMMMM
+	                MMMMMMMMMMMMMK.   '0MMNXWX:      cXMMMMMMMMMMMMMKdo0MMMMMMMMMMMMMNo      ,KWXNMMK.   ,0MMMMMMMMMMMMM
+	                MMMMMMMMMMMMWo   .xWMNO0Wk.      .oNMMMMMMMMMMMM0lcOMMMMMMMMMMMMWx.      .xWKkNMMO.   cNMMMMMMMMMMMM
+	                MMMMMMMMMMMM0'   cNMMkc0Wd        .oNMMMMMMMMMMM0lcOMMMMMMMMMMMNx.        lWKlxWMWo   .OMMMMMMMMMMMM
+	                MMMMMMMMMMMWd   .kMMNc'OWo         .cXMMMMMMMMMM0c:OMMMMMMMMMMXo.         lNK,.XMM0'   lWMMMMMMMMMMM
+	                MMMMMMMMMMMX:   .KMM0'.dWx.          ,kWMMMMMMMMOc.kMMMMMMMMWO.           oWk..kMMN:   .KMMMMMMMMMMM
+	                MMMMMMMMMMMK,   cNMMk. ,K0'           :XMMMMMMMMO:,xMMMMMMMMNl           .kX: .dWMWo   'OMMMMMMMMMMM
+	                MMMMMMMMMMM0'   oWMMx.  cKl          'OMMMMMMMMMk,'xWMMMMMMMMK.          cKo.  oWMWd.  .kMMMMMMMMMMM
+	                MMMMMMMMMMM0'   lWMMO.   ck.        .kWMMMMMMMMMx'.dWMMMMMMMMMO'        'xl.  .xMMWd.  .OMMMMMMMMMMM
+	                MMMMMMMMMMMK.   :XMMK.    .l.       cNMMMMMMMMMMx..oWMMMMMMMMMWo       .l:    ,0MMNl   '0MMMMMMMMMMM
+	                MMMMMMMMMMMNl   ,0MMNd.    .,.     .kMMMMMMMNXWMx..oWWXNMMMMMMM0'     .,.     lNMMX.   :XMMMMMMMMMMM
+	                MMMMMMMMMMMMk.  .dWMXk.            ,KMMMMMMMNkkXd..oXkkNMMMMMMMX:            ,xKWMk.  .dWMMMMMMMMMMM
+	                MMMMMMMMMMMMX.   ,KMXxl,           .KMMMMMMMMKlc:. .cc0MMMMMMMMX:           'cdXMX:   ,KMMMMMMMMMMMM
+	                MMMMMMMMMMMMMk.   lNM0c:'          .OMMWWNXK0Oc.    .:O0KXNWWMMK,          ..:OWWd.  .dWMMMMMMMMMMMM
+	                MMMMMMMMMMMMMNo   .dWWk,'.          oNMWX0kdl:'      .:ldk0XWMWd.         .''dWWx.   cXMMMMMMMMMMMMM
+	                MMMMMMMMMMMMMMXc   .dNWx..          .kWMMMMMWXc..   .:KWMMMMMMO'          ..dNWk.   .KMMMMMMMMMMMMMM
+	                MMMMMMMMMMMMMMMXc   .oXWO'           'kWMMMMNxok:  .kddXMMMMWO,           .xWNd.   .KMMMMMMMMMMMMMMM
+	                MMMMMMMMMMMMMMMMXl.   :0WKl.          .oXMMWXKWNc  .XWXXWMMNd.          .:0WKc.   cKMMMMMMMMMMMMMMMM
+	                MMMMMMMMMMMMMMMMMNx.   .oXNO:.          ,kNMMMMX:  .KMMMMWO.          ..kNXd'   .dNMMMMMMMMMMMMMMMMM
+	                MMMMMMMMMMMMMMMMMMW0:.   'dXNOc.          ,xXWMX:  ,KMWXk..         .cONXx,    .OWMMMMMMMMMMMMMMMMMM
+	                MMMMMMMMMMMMMMMMMMMMNk.    'o0NXkc'.        .ckk,  'xkl'        .'cxKNKo,    ,xNMMMMMMMMMMMMMMMMMMMM
+	                MMMMMMMMMMMMMMMMMMMMMMNx..   ..dKNN0xl.'.      .    .      .'.cd0XNKx:.    ,xXMMMMMMMMMMMMMMMMMMMMMM
+	                MMMMMMMMMMMMMMMMMMMMMMMMNOc.    ..lkKNWNK0kxdollccccllodxk0KNWNKko..    .:kNMMMMMMMMMMMMMMMMMMMMMMMM
+	                MMMMMMMMMMMMMMMMMMMMMMMMMMWKx:.     .,:oxOKXNWWWMMMMWWWNXKOxoc,.     .:dKWMMMMMMMMMMMMMMMMMMMMMMMMMM
+	                MMMMMMMMMMMMMMMMMMMMMMMMMMMMMWXkl..       ..',..::::..,'..       .,lkKWMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+	                MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMWXOdc.'..                 .'.cdkKWMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+	                MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMWNX0kxdollccccllodxk0KNWMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+	                )" << '\n' << endl;
+            
+            // Declaracion de la Estructura JEDI
+            CHARACHTERS;
+            // Asignacion de los elementos de la estructura
+            chosenCharachter.name = " "; 
+            chosenCharachter.force = 10;
+            chosenCharachter.saberSkill = 15;
+            
+            // Se le pide al usuario ingresar su nombre de personaje
+            cout << "Digita un solo nombre (sin espacios) de Padawan Jedi: " << endl;
+            cin >> chosenCharachter.name; // Se le pide al usuario que ingrese el valor del elemento
+            // Comando para limpiar la pantalla
+            system("cls");
+           
+            cout << chosenCharachter.name << " huyes con los pocos sobrevivientes del Templo de Jedha por" << endl;
+            cout << "las calles en ruinas de Christophsis. Los locales los apoyan y guian el rumbo." << endl;
+            cout << "Hay dos caminos para escapar de la ciudadela principal." << endl;
+            cout << '\n' << endl; 
+            cout << "Decide el camino a seguir para escapar de la ciudadela:" << endl;
+            cout << "Digita 1. Escapar por las montanias." << endl;
+            cout << "Digita 2. Escapar por las tuberias." << endl;
+            eleccionJugador = ' ';
+            cin >> eleccionJugador;
+            
+            // Camino Montanias
+            if (eleccionJugador == '1')
+            {
+                
+                system("cls");
+                cout << chosenCharachter.name << " has guiado al grupo de Padawans por las montanias. " << endl;
+                cout << "Durante tu ascenso por los peligrosos riscos te encuentras a un temible Nexu." << endl;
+                cout << "De momento el Nexu no los ha percibido, asi que les dices a los Padawans" << endl;
+                cout << "que calmen sus pensamientos, pero el mas pequenio de todos, un Quarren esta agitado." << endl;
+                cout << "y desesperado por lo que enciende su lightsaber por inercia." << endl;
+                cout << "El Nexu los avista y corre rapidamente hacia ustedes." << endl;
+                cout << '\n' << endl;
+                cout << "Rapido!! No tienes mucho tiempo, elige que hacer:" << endl;
+                cout << "Digita 1. Te concentras para sentir tus midiclorianos y los del Nexu." << endl;
+                cout << "Digita 2. Enciendes tu lightsaber." << endl;
+                eleccionJugador = ' ';
+                cin >> eleccionJugador;
+                // Uso de la Fuerza
+                if (eleccionJugador == '1')
+                {
+                    cout << '\n' << endl;
+                    cout << chosenCharachter.name<< " has levantado tu mano para concentrarte." << endl;
+                    cout << "El Nexu es fuerte, se resiste, avanza hacia a ti y te logra morder el brazo." << endl;
+                    cout << "Sin embargo has resistido, pero sangras." << endl;
+                    cout << chosenCharachter.name << " la Fuerza es intensa en ti, es algo que no habias sentido antes" << endl;
+                    cout << "en los entrenamientos en el Templo de Jedha" << endl;
+                    cout << "La bestia Nexu se calma poco a poco, sientes sus latidos y lo haces caminar lejos del grupo." << endl;
+                    
+                    bonusForce();
+                }
+                // Uso del Lightsaber (Combate)
+                if (eleccionJugador == '2')
+                {
+                    cout << '\n' << endl;
+                    cout << chosenCharachter.name << " enciendes tu lightsaber y te pones enfrente del grupo para poder protegerlos." << endl;
+                    cout << "El Nexu se incomoda y te ataca." << endl;
+                    combatEnemy();
+                    reset();
+                }
+
+                /*system("cls");*/
+                cout << '\n' << endl;
+                cout << chosenCharachter.name << ": Estan todos bien??" << endl;
+                cout << "Calmas al pequenio Quarren." << endl;
+                cout << "Tu camino esta por delante, las senda montaniosa cada vez se hace mas clara." << endl;
+                cout << "A lo lejos ven el descenso de la montania." << endl;
+                cout << "Finalmente has logrado guiar a los jovenes Padawans por el peligroso camino montanioso." << endl;
+
+            }
+            // Camino Tuberias
+            if (eleccionJugador == '2')
+            {
+                system("cls");
+                cout << '\n' << endl;
+                cout << "El camino es peligroso alla abajo te han advertido los locales." << endl;
+                cout << "Intentas abrir la alcantarilla pero esta bloqueada." << endl;
+                cout << '\n' << endl;
+                cout << "Como quieres abrir la alcantarilla??" << endl;
+                cout << "Digita 1.Usas tu lightsaber." << endl;
+                cout << "Digita 2.Usas el poder de la Fuerza." << endl;
+                eleccionJugador = ' ';
+                cin >> eleccionJugador;
+
+                // Uso del Lightsaber
+                if (eleccionJugador == '1')
+                {
+                    cout << '\n' << endl;
+                    cout << chosenCharachter.name << " has encendido tu lightsaber para agujerar la alcantarilla con el calor." << endl;
+                    bonusLightsaber();                    
+                }
+                // Uso de la Fuerza
+                if (eleccionJugador == '2')
+                {
+                    cout << '\n' << endl;
+                    cout << chosenCharachter.name << " se ha concentrado y logra mover los seguros de la alcantarilla." << endl;
+                    bonusForce();
+                }
+
+                cout << '\n' << endl;
+                cout << "Descienden todos los Padawans por la alcantarilla." << endl;
+                cout << "El camino por las alcantarillas es oscuro y frio, apenas se puede ver." << endl;
+                cout << "Por lo que enciendes tu lightsaber." << endl;
+                cout << "Mientras avanzan se encuentran enredados entre algo que parecen ser telas pegajosas." << endl;
+                cout << "Se escuchan ruidos acercandose por el final del camino. " << endl;
+                cout << "Una sombra se hace cada vez mas grande, solo alcanzas a distinguir unas patas." << endl;
+                cout << "Mientras la sombra se engrandese y se aproxima, las telas pegajosas vibran y se mueven." << endl;
+                cout << "La sombra se torna clara." << endl;
+                cout << chosenCharachter.name << " te has encontrado a un Krykna!!." << endl;
+                cout << '\n' << endl;
+                cout << "Rapido!! No tienes mucho tiempo, elige que hacer:" << endl;
+                cout << "Digita 1.Usar la Fuerza." << endl;
+                cout << "Digita 2.Encender lightsaber." << endl;
+                eleccionJugador = ' ';
+                cin >> eleccionJugador;
+
+                // Uso de la Fuerza
+                if (eleccionJugador == '1')
+                {
+                    cout << '\n' << endl;
+                    cout << "La concentracion de la Fuerza no es suficiente para domar a una bestia como esta!!" << endl;
+                    cout << chosenCharachter.name << " no te queda alternativa mas que combatir contra el Krykna." << endl;
+                    combatEnemy();
+                    reset();
+                }
+                // Uso del Lightsaber
+                if (eleccionJugador == '2')
+                {
+                    cout << '\n' << endl;
+                    cout << chosenCharachter.name << " pruebas tu valentia para proteger al grupo." << endl;
+                    combatEnemy();
+                    reset();
+                }
+                cout << '\n' << endl;
+                cout << "El combate fue arduo, pero el camino es claro." << endl;
+                cout << chosenCharachter.name << "Has logrado guiar a tu grupo fuera de las alcantarillas." << endl;
+            }
+
+            cout << '\n' << endl;
+            cout << "La travesia ha sido ardua. Pero parece ser que por fin pueden salir del sistema Christophsis." << endl;
+            cout << chosenCharachter.name << " necesitas una nave para poder escapar junto con los Padawans." << endl;
+            cout << "Atravesar la guerra podria brindarte la oportunidad de tomar una nave" << endl;
+            cout << "La unica solucion es ir a la zona de batalla." << endl;
+            cout << "Por el cielo nublado se abren paso cazas, por el sonido que emiten se acercan cada vez mas a tu posicion." << endl;
+            cout << chosenCharachter.name << ": Agachense todos!!" << endl;
+            cout << "Los cazas han alcanzado la posicion del grupo por lo que les empiezan a disparar." << endl;
+            cout << "El esquadron de cazas disparan alrededor del grupo y los rodean." << endl;
+            cout << "Uno de los pilotos se baja y saca un tridente electrificado." << endl;
+            cout << "Piloto: Entregalos y tal vez salgas con vida." << endl;
+            cout << chosenCharachter.name << ": Todos estan bajo mi proteccion y si debo entregar mi vida para salvarlos, que la Fuerza lo decida." << endl;
+            cout << chosenCharachter.name << ": Soy uno con la Fuerza y la Fuerza esta en mi." << endl;
+            cout << chosenCharachter.name << ": Soy uno con la Fuerza y la Fuerza esta en mi." << endl;
+            combatEnemy();
+            reset();
+
+            cout << '\n' << endl;
+            cout << chosenCharachter.name << " el combate te ha dejado malherido." << endl;
+            cout << "Los Padawans necesitan proteccion, necesitan de ti." << endl;
+            cout << "Todos se concentran, sienten la Fuerza que los rodea." << endl;
+            cout << "La Fuerza combinada del grupo y su voluntad de ayudar a su protector pone en practica algo inusual para un Padawan." << endl;
+            cout << "Es algo que creias imposible, ni los holocrones del Templo de Jedha mencionaban como aplicar dicha tecnica." << endl;
+            cout << chosenCharachter.name << " te has recuperado por completo, tus heridas sanan con rapidez." << endl;
+            cout << "Es la voluntad de la Fuerza que " << chosenCharachter.name << " sea el protector de estos Padawans." << endl;
+
+            // Se asignan los valores del personaje escogido por el usuario a los valores del personaje Jefe Final para un combate equilibrado
+            rivalCharachter = chosenCharachter;
+            rivalCharachter.name = " ";
+
+            // Combate Final
+            cout << '\n' << endl;
+            cout << "Apenas y puedes levantarte." << endl;
+            cout << "En el cielo un estruendo golpea la tranquilidad." << endl;
+            cout << "Un caza mas atraviesa el humo de la destruccion." << endl;
+            cout << "Del caza estelar sale un sujeto en tunica amenzante." << endl;
+            cout << chosenCharachter.name << " te levantas del suelo con ayuda de los Padawans." << endl;
+            cout << "El momento se acerca. El destino de la Fuerza y la galaxia entera esta en tus manos." << endl;
+            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 4);
+            cout << rivalCharachter.name << ": He esperado tiempo para nuestro encuentro." << endl;
+            cout << rivalCharachter.name << ": La fuerza me ha enviado. Me ha guiado hacia ustedes." << endl;
+            cout << rivalCharachter.name << ": Hermano, ahora conoceras la voluntad de la Fuerza." << endl;
+            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 2);
+            cout << chosenCharachter.name << ": " << rivalCharachter.name << " ha pasado tiempo desde nuestra ultima reunion." << endl;
+            cout << chosenCharachter.name << ": Desde que fuiste seducido por el lado oscuro, desde que dejaste de ser mi hermano." << endl;
+            cout << chosenCharachter.name << ": Eramos tu familia y aun asi nos cazas." << endl;
+            cout << chosenCharachter.name << ": Tu y yo eramos la diada de la Fuerza. Juntos debiamos traer equilbrio a la Fuerza." << endl;
+            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 4);
+            cout << rivalCharachter.name << ": Que no lo ves hermano. Finalmente lo comprendo. Esta es la manera." << endl;
+            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 2);
+            cout << chosenCharachter.name << ": Esta es la manera??" << endl;
+            cout << chosenCharachter.name << ": Unirte a la causa de un mandaloriano genocida??" << endl;
+            cout << chosenCharachter.name << ": Esos no son tus pensamientos." << endl; 
+            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 4);
+            cout << rivalCharachter.name << ": Lo son ahora. He cambiado hermano. Todo es parte de El Gran Plan." << endl;
+            cout << rivalCharachter.name << ": La galaxia esta infestada de gente que usa la Fuerza sin motivo. Y por eso es necesaria una purificacion." << endl;
+            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 2);
+            cout << chosenCharachter.name << ": Solo un Sith seria asi de radical." << endl;
+            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 4);
+            cout << rivalCharachter.name << ": Solo un Jedi esta limitado a su vision simplista." << endl;
+            cout << rivalCharachter.name << ": No entiendes por lo que he pasado, las vidas que he tomado, todo ha sido necesario." << endl;
+            cout << rivalCharachter.name << ": El Gran Plan reclama sacrificios. Unicamente asi, la Fuerza sera controlada." << endl;
+            cout << rivalCharachter.name << ": Si no entiendes lo que hago, estas en mi contra." << endl;
+            cout << rivalCharachter.name << " se ha quitado la tunica y enciende su lightsaber de luz roja carmesi." << endl;
+            cout << rivalCharachter.name << ": Tu lo has dicho, ya no eres mi hermano, eres mi enemigo. Y pagaras con tu vida." << endl;
+            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 2);
+            cout << chosenCharachter.name << " enciende su lightsaber verde como la esperanza de equilibrio en la Fuerza." << endl;
+
+            cout << '\n' << endl;
+            combatRival();
+
+            // Ganas
+            if (rivalCharachter.life == 0)
+            {
+                cout << '\n' << endl;
+                cout << chosenCharachter.name << " atraviesas con tu lightsaber a " << rivalCharachter.name << " y lo sostienes mientras cae lentamente a tus pies." << endl;
+                cout << chosenCharachter.name << ": Este ha sido tu destino, tu lo elegiste." << endl;
+                cout << chosenCharachter.name << ": Has perecido por radicalista." << endl;
+                cout << chosenCharachter.name << ": La maestra Bastila estaria decepcionada del final de su Padawan." << endl;
+                cout << chosenCharachter.name << ": Debi evitar que fueras seducido por el lado oscuro." << endl;
+                cout << chosenCharachter.name << ": Te he fallado hermano." << endl;
+
+                cout << '\n' << endl;
+                cout << "Te levantas y sueltas el cuerpo del quien alguna vez fue tu hermano" << endl;
+                cout << "Caminas a traves del humo de la batalla a reunirte con los Padawans." << endl;
+                cout << "El Aprendiz Sith ha caido." << endl;
+                cout << "El equilibrio de la Fuerza parece mas cercano que nunca." << endl;
+
+            }
+            // Pierdes
+            if (chosenCharachter.life == 0)
+            {
+                SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 4);
+                cout << '\n' << endl;
+                cout << rivalCharachter.name << " te ha cortado una mano y caes de rodillas, exhausto." << endl;
+                cout << "Miras hacia los Padawans desprotegidos." << endl;
+                cout << rivalCharachter.name << " se aproxima a ellos." << endl;
+                SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 2);
+                cout << chosenCharachter.name << ": Alejate de ellos. NOO!!" << endl;
+                cout << chosenCharachter.name << " no puedes hacer nada mas que expectar la resolucion final." << endl;
+                SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 4);
+                cout << rivalCharachter.name << " atraviesa, descuartiza y asesina a cada uno de tus protegidos." << endl;
+                cout << "El campo de batalla se llena de sangre joven inocente. Roja oscura como la oscuridad que se avecina para la galaxia." << endl;
+                cout << rivalCharachter.name << ": Esto era necesario." << endl;
+                cout << rivalCharachter.name << ": El verdadero equilibrio y orden en la Fuerza sera cumplido. Mi maestro estara orgulloso de lo que he logrado." << endl;
+               
+                cout << '\n' << endl;
+                cout << rivalCharachter.name << " avanza hacia donde tu vida se esta apagando." << endl;
+                cout << rivalCharachter.name << ": Esta es la voluntad de la Fuerza." << endl;
+                cout << rivalCharachter.name << " te corta la cabeza con su lightsaber." << endl;
+            }
+
+
+            /*
+            rivalCharachter = chosenCharachter;
+            rivalCharachter.name = " Nuevo Nombre";
+            */
+
+		}
+        if (eleccionJugador == '2')
+        {
+            // Funcion para cambiar el color de texto de la consola a Rojo = 4, representando el color del Lightsaber
+            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 4);
+                cout << R"(
+
+                    MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMNXKNWMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+                    MMMMMMMMMMMMMMMMMMMMMMMMMMMMMWXkl,..'cxKWMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+                    MMMMMMMMMMMMMMMMMMMMMMMMMMN0d:.  ....  .;oONMMMMMMMMMMMMMMMMMMMMMMMMMM
+                    MMMMMMMMMMMMMMMMMMMMMMWXOo,.  .;o0XNKxc'   'cxKWMMMMMMMMMMMMMMMMMMMMMM
+                    MMMMMMMMMMMMMMMMMMMWKx:.   'cxKWMNXXNMWXOo,.  .;o0NMMMMMMMMMMMMMMMMMMM
+                    MMMMMMMMMMMMMMMWNNMK;  .;oONMMNOo,..'ckXWMWKx:.  .kWWNWMMMMMMMMMMMMMMM
+                    MMMMMMMMMMMMWKxc';OWOoxKWMWXkl'        .cxKWMWXkoxNXl';d0NMMMMMMMMMMMM
+                    MMMMMMMMMNOo;.  .;kWMMMMM0c,,cc.      .:l;,:OWMMMMMKc.  .,lkXWMMMMMMMM
+                    MMMMMWKkc'.  .cxKWMMMMMMMKxOXWX;      .OMN0x0WMMMMMMWXkl,.  .:d0NMMMMM
+                    MMN0d;.  .,lOXWMWKKNMMMMMMMMMMNl      ,KMMMMMMMMMMWKKNMMN0d;.  .,lOXWM
+                    MXc.  .:xKNMWXOo:,lKMMMMMMMMMMWd.     cNMMMMMMMMMMNd;;lkKWMWXkl'.  ;0M
+                    M0'  cXWMN0d:..,d0NMMMMMMMMMMMMO.     oWMMMMMMMMMMMWKx;..;oOXWMNd. .kM
+                    M0'  dWMKc.    .lONMMMMMMMMMMMMK,    .kMMMMMMMMMMMMW0o,     ,OMMO. .kM
+                    M0'  dWM0'       .,o0WMMMMMMMMMX:    '0MMMMMMMMMWKx;.       .xMMO. .kM
+                    M0'  dWM0'          .:xXWMMMWXOl.    .:xKWMMMMNkc.          .kMMO. .kM
+                    M0'  dWMK,.ldc'.       .ck0x:.          .;dOOl'        .:oo..OMMO. .kM
+                    M0'  dWMK,.kMMNKxl;.                              .,cd0XWMK,.OMMO. .kM
+                    M0'  dWMNoc0MMMMMMWXOdc'                      .:okKWMMMMMMXolKMMO. .kM
+                    MK. .xWMMWWMMMMMMMMMMMMO'                    .dWMMMMMMMMMMMWWMMM0,.'OM
+                    MWX0KNMMMMMMMMMMMMMMMMM0'                    .xMMMMMMMMMMMMMMMMMWK0KNM
+                    MXd:l0MMMMMMMMMMMMMMMMM0'                    .xMMMMMMMMMMMMMMMMMKo:oKM
+                    M0'  dWMW0ONMMMMMMMMWN0o.                     :OXWMMMMMMMMWOONMMO. .kM
+                    M0'  dWMX;.OMMMMWXOo:'.                         .;lx0NWMMMK;'OMMO. .kM
+                    M0'  dWMK,.kN0xl,.      .;c,.             '::.      .':oOX0,.OMMO. .kM
+                    M0'  dWMK, ''.        ,o0WMN0d:.      .;oONWWKd;.        .'..kMMO. .kM
+                    M0'  dWM0'         .cONMMMMMMMWK;    'kWMMMMMMMW0o,         .kMMO. .kM
+                    M0'  dWM0'      .:xXWMMMMMMMMMMX;    .OMMMMMMMMMMMNOc.      .xMMO. .kM
+                    M0'  oWMNk:.   ,OWMMMMMMMMMMMMM0'    .xMMMMMMMMMMMMMW0c.  .:dXMMO. .kM
+                    MK,  .lOXWWXOo;',ckNMMMMMMMMMMMx.     oWMMMMMMMMMMNOl;,;lkXWMN0d,  .kM
+                    MNOc'   .cxKWMWKkloKMMMMMMMMMMWo      :XMMMMMMMMMMNdlxKWMWXkl,.  .:xXM
+                    MMMWNOo;.  .,oONWMMMMMMMMWNWMMNc      ,0MMWNWMMMMMMMMMN0d:.  .'lkXWMMM
+                    MMMMMMMWKxc.   'cxXWMMMMMOc:d0O,      .xKxc:kWMMMMMNOl,.  .;o0NMMMMMMM
+                    MMMMMMMMMMWXOo,. .xWNKNMMN0o:,.        .';lONMMWKXW0,  'cxKWMMMMMMMMMM
+                    MMMMMMMMMMMMMMN0xkNKc.'cxKWMWKd:.    .,o0NMWXOo,.,OW0xONMMMMMMMMMMMMMM
+                    MMMMMMMMMMMMMMMMMMMXo,.  .;o0NMWXxold0NMWKxc'   'c0WMMMMMMMMMMMMMMMMMM
+                    MMMMMMMMMMMMMMMMMMMMMN0d:.  .'lkXWMMMNOo;.  .;oONMMMMMMMMMMMMMMMMMMMMM
+                    MMMMMMMMMMMMMMMMMMMMMMMMWXkl,.  .:loc'   .:xKWMMMMMMMMMMMMMMMMMMMMMMMM
+                    MMMMMMMMMMMMMMMMMMMMMMMMMMMMN0d:.    .,oOXWMMMMMMMMMMMMMMMMMMMMMMMMMMM
+                    MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMWXkold0WMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+
+                   )" << '\n' << endl;
+
+                // Declaracion de la Estructura SITH
+                CHARACHTERS;
+                // Asignacion de los elementos de la estructura
+                chosenCharachter.name = " ";
+                chosenCharachter.force = 8;
+                chosenCharachter.saberSkill = 20;
+                cout << "Digita un solo nombre (sin espacios) de Aprendiz Sith: " << endl;
+                cin >> chosenCharachter.name;
+                // Comando para limpiar la pantalla
+                system("cls");
+               
+                cout << chosenCharachter.name << " el cazarrecompenzas Emb'Sing te ha dado la informacion de la ubicacion" << endl;
+                cout << " de los sobrevivientes del Templo Jedha. Sin embargo, la resistencia local de Christophsis es fuerte," << endl;
+                cout << "por lo que tu almirante sugiere un ataque para barrer con los locales." << endl;
+                cout << '\n' << endl;
+                cout << "Decide la estrategia a usar:" << endl;
+                cout << "Digita 1. Enviar cazas estelares para barrer con la oposicion." << endl;
+                cout << "Digita 2. Enviar tropas simpatizantes para un exterminio de la poblacion." << endl;
+                eleccionJugador = ' ';
+                cin >> eleccionJugador;
+                system("cls");
+
+                // Envio de cazas
+                if (eleccionJugador == '1')
+                {
+                    cout << chosenCharachter.name << " Has enviado cazas para limpiar el terreno." << endl;
+                }
+                // Envio de tropas
+                if (eleccionJugador == '2')
+                {
+                    cout << chosenCharachter.name << " Has enviado tropas Sith para exterminar con los locales" << endl;
+                }
+
+                cout << '\n' << endl;
+                cout << "Almirante: General, tenemos una transmision entrante de Lord Revan." << endl;
+                cout << "Lord Revan: Mi Aprendiz, te has encargado de la situacion de los sobrevivientes??" << endl;
+                cout << chosenCharachter.name << ": Hemos encontrado una oposicion local, pero ya me he encargado." << endl;
+                cout << "Lord Revan: Bien, bien. Busca a los sobrevivientes y exterminalos." << endl;
+                cout << "Lord Revan: La ejecucion de El Gran Plan depende ahora de tus acciones." << endl;
+                cout << chosenCharachter.name << ": Si maestro." << endl;
+                cout << "Fin de la transmision." << endl;
+
+                cout << '\n' << endl;
+                cout << chosenCharachter.name << " sales del puente del carguero estelar hacia el puerto de naves." << endl;
+                cout << "Las ordenes son claras. Exterminio." << endl;
+                cout << "TWWWT TWWWT TWWWT." << endl;
+                cout << "Las alarmas del carguero estelar suenan. Estan bajo ataque." << endl;
+                cout << "Encuentra a los responsables del ataque y hazlos pagar." << endl;
+                cout << '\n' << endl;
+                cout << "Hay dos pasillos elige por cual ir:" << endl;
+                cout << "Digita 1. Izquierda." << endl;
+                cout << "Digita 2. Derecha." << endl;
+                eleccionJugador = ' ';
+                cin >> eleccionJugador;
+                system("cls");
+
+                // Izquierda
+                if (eleccionJugador == '1')
+                {
+
+                    cout << chosenCharachter.name << " has tomado el pasillo de la izquierda." << endl;
+                    cout << "Una tropa de la guardia de Christophsis ha penetrado las defensas de la nave." << endl;
+                    cout << "Las tropas empiezan a dispararte." << endl;
+                    cout << "Enciendes tu lightsaber para cubrirte de los disparos." << endl;
+                    cout << '\n' << endl;
+                    cout << "Decide como exterminar a la primera amenaza:" << endl;
+                    cout << "Digita 1. Relampagos Sith." << endl;
+                    cout << "Digita 2. Lanzamiento de Lightsaber." << endl;
+                    eleccionJugador = ' ';
+                    cin >> eleccionJugador;
+
+                    // Relampagos Sith
+                    if (eleccionJugador == '1')
+                    {
+                        cout << chosenCharachter.name << " has lanzado relampagos Sith de tus manos, electrocutando a la amenaza." << endl;
+                        bonusForce();
+                    }
+                    // Lanzamiento Lightsaber
+                    if (eleccionJugador == '2')
+                    {
+                        cout << chosenCharachter.name << " has lanzado con la Fuerza tu lightsaber hacia los enemigos, cortandolos por la mitad a cada uno." << endl;
+                        bonusLightsaber();
+                    }
+
+                    cout << '\n' << endl;
+                    cout << chosenCharachter.name << " sales del pasillo corriendo y entras al puerto de cazas." << endl;
+                    cout << "Un Wookie perteneciente a las tropas de Christophsis coloca bombas de protones en algunas cazas y las hace arder en llamas." << endl;
+                    cout << chosenCharachter.name << " tu furia incrementa." << endl;
+                    cout << "Enciendes tu lightsaber y corres hacia el pobre bastardo que ha decido atacar tu nave." << endl;
+                    combatEnemy();
+                    reset();
+
+                    cout << '\n' << endl;
+                    cout << "De las pocas cazas que quedan logras armar un peque�o escuadron" << endl;
+                                       
+                }
+
+                // Derecha
+                if (eleccionJugador == '2')
+                {
+                    cout << chosenCharachter.name << " has tomado el pasillo de la derecha. " << endl;
+                    cout << "Una tropa de la guardia de Christophsis ha penetrado las defensas de la nave." << endl;
+                    cout << "Las tropas empiezan a dispararte." << endl;
+                    cout << "Enciendes tu lightsaber para cubrirte de los disparos." << endl;
+                    cout << '\n' << endl;
+                    cout << "Decide como exterminar a la primera amenaza:" << endl;
+                    cout << "Digita 1. Ahorcamiento Sith." << endl;
+                    cout << "Digita 2. Furia de Lightsaber." << endl;
+                    eleccionJugador = ' ';
+                    cin >> eleccionJugador;
+
+                    // Ahorcamiento Sith
+                    if (eleccionJugador == '1')
+                    {
+                        cout << chosenCharachter.name << " te concentras y levantas tu mano abierta, haces volar a todo el escuadron por el aire." << endl;
+                        cout << "Los enemigos se encuentran suspendidos. Temen por su vida." << endl;
+                        cout << "Tu mano se va cerrando de a poco y con ello, la vida de los enemigos se escapa por sus bocas abiertas, desesperadas por tomar aire." << endl;
+                        bonusForce();
+                    }
+                    // Furia de Lightsaber
+                    if (eleccionJugador == '2')
+                    {
+                        cout << chosenCharachter.name << " haces girar rapidamente el lightsaber creando un remolino de destruccion." << endl;
+                        cout << "Descuartizas y desgarras los miembros de cada soldado." << endl;
+                        bonusLightsaber();
+                    }
+
+                    cout << '\n' << endl;
+                    cout << "Almirante: General" << chosenCharachter.name << " hemos detectado intrusos en el cuarto del generador, si logran destruirlo caeremos con la nave" << endl;
+                    cout << "Corres furioso hacia el generador." << endl;
+                    cout << "Sientes la ira correr por tu sangre." << endl;
+                    cout << "En el cuarto de maquinas se encuentra un Nautolano tratando de colocar explosivos en el generador" << endl;
+                    cout << "Tratas de electrocutarlo pero se cubre con una barrera." << endl;
+                    cout << "El Nautolano desenfunda un tridente electrificado." << endl;
+                    cout << chosenCharachter.name << "Recuerdas las ense�anzas de tu maestro. La ira y el miedo son la Fuerza del lado oscuro." << endl;
+                    combatEnemy();
+                    reset();       
+
+                    cout << '\n' << endl;
+                    cout << "Sales victorioso del combate y te diriges al puerto de naves." << endl;
+
+                }
+
+                cout << "Subes a tu caza estelar y te diriges junto con un escuadron hacia la superficie del planeta Christophsis." << endl;
+                cout << "Una vez en la superficie de Christophsis te reportas con tus tropas en la batalla." << endl;
+                cout << "Comandante: General hemos investigado los rastros que el cazarrecompensas Emb'Sing nos ha dado sobre la locacion de los sobrevivientes." << endl;
+                cout << "Comandante: Han escapado de la ciudadela principal. Pero hay dos rutas posibles que pudieron seguir." << endl;
+                cout << "Comandante: El escape de la ciudadela es posible por la cordillera de montanias o por el sistema de alcantarillas de la ciudadela." << endl;
+                cout << chosenCharachter.name << ": Buen trabajo Comandante. Me encargare de localizar a la escoria Jedi personalmente." << endl;
+                cout << '\n' << endl;
+                cout << "Elige el rastro a seguir:" << endl;
+                cout << "Digita 1. Cordillera montaniosa." << endl;
+                cout << "Digita 2. Sistema de alcantarillas." << endl;
+                eleccionJugador = ' ';
+                cin >> eleccionJugador;
+
+                // Montanias
+                if (eleccionJugador == '1')
+                {
+                    system("cls");
+                    cout << chosenCharachter.name << " has decidido guiar al escuadron por las montanias." << endl;
+                    cout << "El camino por las montanias es desafiante." << endl;
+                    cout << "En el primer plano de las cordilleras avistan a un Nexu." << endl;
+                    cout << "Un miembro del escuadron le dispara por instinto." << endl;
+                    cout << "El Nexu toma carrera y se avalancha contra el soldado que disparo. Desgarrando sus extremidades" << endl;
+                    cout << chosenCharachter.name << "La bestia se dirige hacia ti." << endl;
+                    cout << '\n' << endl;
+                    cout << "Elige el movimiento de contraataque." << endl;
+                    cout << "Digita 1. Empujon de la Fuerza." << endl;
+                    cout << "Digita 2. Lanzamiento de Lightsaber." << endl;
+                    eleccionJugador = ' ';
+                    cin >> eleccionJugador;
+
+                    if (eleccionJugador == '1')
+                    {
+                        cout << '\n' << endl;
+                        cout << chosenCharachter.name << " has lanzado un Empujon de la Fuerza." << endl;
+                        bonusForce();
+                        cout << "Sin embargo no es suficiente para desviar la atencion del Nexu. Lo has enfurecido mas." << endl;
+                        cout << "El Nexu serpentea y se lanza hacia ti." << endl;
+                        combatEnemy();
+                        reset();
+                    }
+                    if (eleccionJugador == '2')
+                    {
+                        cout << '\n' << endl;
+                        cout << chosenCharachter.name << " has lanzado tu lightsaber hacia el Nexu." << endl;
+                        bonusLightsaber();
+                        cout << "Pero parece que a la bestia no le ha hecho nada." << endl;
+                        cout << "El Nexu ruge y se avalancha hacia a ti." << endl;
+                        combatEnemy();
+                        reset();
+                    }
+
+
+                }
+                // Alcantarillas
+                if (eleccionJugador == '2')
+                {
+                    system("cls");
+                    cout << chosenCharachter.name << " has decidido guiar al escuadron por las alcanatarillas." << endl;
+                    cout << "Intentas abrir la alcantarilla pero esta bloqueada." << endl;
+                    cout << '\n' << endl;
+                    cout << "Como quieres abrir la alcantarilla??" << endl;
+                    cout << "Digita 1.Usas tu Lightsaber." << endl;
+                    cout << "Digita 2.Usas el poder de la Fuerza." << endl;
+                    eleccionJugador = ' ';
+                    cin >> eleccionJugador;
+
+                    // Uso del Lightsaber
+                    if (eleccionJugador == '1')
+                    {
+                        cout << '\n' << endl;
+                        cout << chosenCharachter.name << " has encendido tu lightsaber para agujerar la alcantarilla con el calor." << endl;
+                        bonusLightsaber();
+                    }
+                    // Uso de la Fuerza
+                    if (eleccionJugador == '2')
+                    {
+                        cout << '\n' << endl;
+                        cout << chosenCharachter.name << " se ha concentrado y logra mover los seguros de la alcantarilla." << endl;
+                        bonusForce();
+                    }
+
+                    cout << '\n' << endl;
+                    cout << "El camino por las alcantarillas es oscuro y frio, apenas se puede ver." << endl;
+                    cout << "Por lo que enciendes tu lightsaber." << endl;
+                    cout << "Mientras avanzan se encuentran enredados entre algo que parecen ser telas pegajosas." << endl;
+                    cout << "Se escuchan ruidos acercandose por el final del camino. " << endl;
+                    cout << "Una sombra se hace cada vez mas grande, solo alcanzas a distinguir unas patas." << endl;
+                    cout << "Mientras la sombra se engrandese y se aproxima, las telas pegajosas vibran y se mueven." << endl;
+                    cout << "La sombra se torna clara." << endl;
+                    cout << chosenCharachter.name << " te has encontrado a un Krykna!!." << endl;
+                    combatEnemy();
+                    reset();
+
+                    cout << chosenCharachter.name << " has derrotado al Krykna y escapado de las alcantarillas." << endl;
+                }
+
+                cout << '\n' << endl;
+                cout << "Al final del camino logran avistar a los sobrevivientes huyendo." << endl;
+                cout << "Pero quedan lejos de su posicion." << endl;
+                cout << chosenCharachter.name << ": Comandante, despliegue una tropa de cazas a las coordenadas que le mando y dispare a los objetivos sin discrecion" << endl;
+                cout << chosenCharachter.name << ": Y envie mi caza a mi posicion. Necesitare comunicarme con mi maestro." << endl;
+                cout << "Comandante: Enseguida General." << endl;
+
+                cout << '\n' << endl;
+                cout << "Despues de un rato levantas la mirada hacia el cielo y miras pasar el escuadron de eliminacion que ordenaste." << endl;
+                cout << "Mas tarde llega tu caza estelar. Y abordas." << endl;
+                cout << "Contactas con Lord Revan." << endl;
+                cout << chosenCharachter.name << ": Maestro se lo que tengo que hacer, pero no se si tenga la fuerza para hacerlo." << endl;
+                cout << "Lord Revan: El momento ha llegado mi Aprendiz. Es tiempo de que cumplas con tu destino." << endl;
+                cout << "Lord Revan: Tienes un papel importante dentro de El Gran Plan." << endl;
+                cout << "Lord Revan: Recuerda que tu mayor aliada la ira es." << endl;
+                cout << "Lord Revan: A traves de la ira tienes fuerza. Por la fortaleza tienes poder." << endl;
+                cout << "Lord Revan: Mediante el poder obtendras victoria. Y finalmente las cadenas de tu pasado se romperan." << endl;
+                cout << "Lord Revan: Deja que el lado oscuro de la Fuerza te libere." << endl;
+                cout << "Fin de la transmision." << endl;
+
+                cout << '\n' << endl;
+                cout << chosenCharachter.name << " enciendes los motores del caza estelar y te diriges hacia las coordenadas del escuadron de eliminacion." << endl;
+                cout << "El momento se acerca. El destino de la Fuerza y la galaxia entera esta en tus manos." << endl;
+
+                cout << '\n' << endl;
+                cout << "Has llegado a las coordenadas del escuadron de exterminio, nubes de humo nublan la escena, la batalla ha sido dura." << endl;
+                cout << "Mientras aterrizas el caza estelar despeja poco a poco el humo." << endl;
+                cout << chosenCharachter.name << " sales del caza." << endl;
+
+                // Se asignan los valores del personaje escogido por el usuario a los valores del personaje Jefe Final para un combate equilibrado
+                rivalCharachter = chosenCharachter;
+                rivalCharachter.name = " ";
+
+                // Combate Final
+                cout << "Miras hacia el frente y de entre el humo ves a un supervivient que se levanta del suelo con ayuda de los demas." << endl;
+                cout << chosenCharachter.name << ": He esperado tiempo para nuestro encuentro." << endl;
+                cout << chosenCharachter.name << ": La fuerza me ha enviado. Me ha guiado hacia ustedes." << endl;
+                cout << chosenCharachter.name << ": Hermano, ahora conoceras la voluntad de la Fuerza." << endl;
+                SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 2);
+                cout << rivalCharachter.name << ": " << chosenCharachter.name << " ha pasado tiempo desde nuestra ultima reunion." << endl;
+                cout << rivalCharachter.name << ": Desde que fuiste seducido por el lado oscuro, desde que dejaste de ser mi hermano." << endl;
+                cout << rivalCharachter.name << ": Eramos tu familia y aun asi nos cazas." << endl;
+                cout << rivalCharachter.name << ": Tu y yo eramos la diada de la Fuerza. Juntos debiamos traer equilbrio a la Fuerza." << endl;
+                SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 4);
+                cout << chosenCharachter.name << ": Que no lo ves hermano. Finalmente lo comprendo. Esta es la manera." << endl;
+                SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 2);
+                cout << rivalCharachter.name << ": Esta es la manera??" << endl;
+                cout << rivalCharachter.name << ": Unirte a la causa de un mandaloriano genocida??" << endl;
+                cout << rivalCharachter.name << ": Esos no son tus pensamientos." << endl;
+                SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 4);
+                cout << chosenCharachter.name << ": Lo son ahora. He cambiado hermano. Todo es parte de El Gran Plan." << endl;
+                cout << chosenCharachter.name << ": La galaxia esta infestada de gente que usa la Fuerza sin motivo. Y por eso es necesaria una purificacion." << endl;
+                SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 2);
+                cout << rivalCharachter.name << ": Solo un Sith seria asi de radical." << endl;
+                SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 4);
+                cout << chosenCharachter.name << ": Solo un Jedi esta limitado a su vision simplista." << endl;
+                cout << chosenCharachter.name << ": No entiendes por lo que he pasado, las vidas que he tomado, todo ha sido necesario." << endl;
+                cout << chosenCharachter.name << ": El Gran Plan reclama sacrificios. Unicamente asi, la Fuerza sera controlada." << endl;
+                cout << chosenCharachter.name << ": Si no entiendes lo que hago, estas en mi contra." << endl;
+                cout << chosenCharachter.name << " se ha quitado la tunica y enciende su lightsaber de luz roja carmesi." << endl;
+                cout << chosenCharachter.name << ": Tu lo has dicho, ya no eres mi hermano, eres mi enemigo. Y pagaras con tu vida." << endl;
+                SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 2);
+                cout << rivalCharachter.name << " enciende su lightsaber verde como la esperanza de equilibrio en la Fuerza." << endl;
+
+                SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 4);
+                cout << '\n' << endl;
+                combatRival();
+
+                // Ganas
+                if (rivalCharachter.life == 0)
+                {
+                    cout << '\n' << endl;
+                    cout << chosenCharachter.name << " le has cortado una mano a " << rivalCharachter.name << " y cae de rodillas, exhausto." << endl;
+                    cout << rivalCharachter.name << " mira hacia los Padawans desprotegidos." << endl;
+                    cout << chosenCharachter.name << " te aproximas hacia ellos." << endl;
+                    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 2);
+                    cout << rivalCharachter.name << ": Alejate de ellos. NOO!!" << endl;
+                    cout << rivalCharachter.name << " no puede hacer nada mas que expectar la resolucion final." << endl;
+                    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 4);
+                    cout << chosenCharachter.name << " atraviesas, descuartizas y asesinas a cada uno de los protegidos." << endl;
+                    cout << "El campo de batalla se llena de sangre joven Jedi. Roja oscura como la oscuridad que reinara en la galaxia." << endl;
+                    cout << chosenCharachter.name << ": Esto era necesario." << endl;
+                    cout << chosenCharachter.name << ": El verdadero equilibrio y orden en la Fuerza sera cumplido. Mi maestro estara orgulloso de lo que he logrado." << endl;
+
+                    cout << '\n' << endl;
+                    cout << chosenCharachter.name << " avanzas hacia donde la vida de tu openente se esta apagando." << endl;
+                    cout << chosenCharachter.name << ": Esta es la voluntad de la Fuerza." << endl;
+                    cout << chosenCharachter.name << " le cortas la cabeza a " << rivalCharachter.name << " con tu lightsaber." << endl;
+                    cout << "Dejas lentamente la escena, la ira siempre estuvo contigo. La verdadera voluntad de la Fuerza se cumplira." << endl;
+                    cout << chosenCharachter.name << " finalmente el poder del lado oscuro te ha liberado de las cadenas del pasado." << endl;
+                    cout << "El Gran Plan de Lord Revan sera cumplido sin obstaculos. Y en la galaxia el lado oscuro tendra orden y control de la Fuerza." << endl;
+                }
+                // Pierdes
+                if (chosenCharachter.life == 0)
+                {
+                    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 2);
+                    cout << '\n' << endl;
+                    cout << rivalCharachter.name << " te atraviesa con su lightsaber y te sostiene mientras caes lentamente a sus pies." << endl;
+                    cout << rivalCharachter.name << ": Este ha sido tu destino " << chosenCharachter.name << " tu lo elegiste." << endl;
+                    cout << rivalCharachter.name << ": Has perecido por radicalista." << endl;
+                    cout << rivalCharachter.name << ": La maestra Bastila estaria decepcionada del final de su Padawan." << endl;
+                    cout << rivalCharachter.name << ": Debi evitar que fueras seducido por el lado oscuro." << endl;
+                    cout << rivalCharachter.name << ": Te he fallado hermano." << endl;
+
+                    cout << '\n' << endl;
+                    cout << rivalCharachter.name << " se levanta y suelta el cuerpo del quien alguna vez fue su hermano" << endl;
+                    cout << rivalCharachter.name << " camina a traves del humo de la batalla a reunirse con los Padawans." << endl;
+                    cout << "El Aprendiz Sith ha caido." << endl;
+                    cout << "El equilibrio de la Fuerza parece mas cercano que nunca." << endl;
+                }
+        }
+    }   
+}
